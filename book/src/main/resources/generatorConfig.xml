@@ -2,8 +2,9 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	
-	<classPathEntry location="D:\maven\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar" />
-	
+	<!--<classPathEntry location="D:\maven\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar" />-->
+	<classPathEntry location="D:\Java\maven_repository\mysql\mysql-connector-java\8.0.16\mysql-connector-java-8.0.16.jar" />
+
   <context id="xmgl" targetRuntime="MyBatis3">
   
   	<commentGenerator>
@@ -23,7 +24,7 @@
     
     <javaClientGenerator targetPackage="com.jmu.book.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
-      <table tableName="tb_book_price_share" domainObjectName="BookPriceShare"
+      <table tableName="tb_book_comment_count" domainObjectName="BookCommentCount"
              enableCountByExample="false" enableUpdateByExample="false"
              enableDeleteByExample="false" enableSelectByExample="false"
              selectByExampleQueryId="false">
