@@ -15,7 +15,7 @@
             <property name="suppressDate" value="true" />    
     </commentGenerator>
   
-    <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/book" driverClass="com.mysql.jdbc.Driver" password="123456" userId="root" />
+    <jdbcConnection connectionURL="jdbc:mysql://rm-bp17c2807y380g253fo.mysql.rds.aliyuncs.com:3306/book" driverClass="com.mysql.jdbc.Driver" password="Abc123456" userId="root" />
     
     <javaModelGenerator targetPackage="com.jmu.book.entity" targetProject="src/main/java" />
     
@@ -23,7 +23,7 @@
     
     <javaClientGenerator targetPackage="com.jmu.book.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
-      <table tableName="tb_book_big" domainObjectName="BookBig"
+      <table tableName="tb_category" domainObjectName="Category"
              enableCountByExample="false" enableUpdateByExample="false"
              enableDeleteByExample="false" enableSelectByExample="false"
              selectByExampleQueryId="false">
