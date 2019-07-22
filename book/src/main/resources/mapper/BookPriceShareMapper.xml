@@ -67,4 +67,17 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectAllYear" resultType="String">
+    select distinct (year) from tb_book_price_share order by YEAR asc
+  </select>
+
+  <select id="selectAllCategoryName" resultType="String">
+    select distinct (category_name) from tb_book_price_share
+  </select>
+
+  <select id="selectBookPriceShareByYearAndCategoryName" resultType="com.jmu.book.entity.BookPriceShare">
+    select * from tb_book_price_share where year=#{year} and category_name=#{categoryName}
+  </select>
+
 </mapper>
