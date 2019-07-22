@@ -123,4 +123,9 @@
       </if>
     </trim>
   </insert>
+
+  <!--按照年份查询-->
+  <select id="selectTopThreeBookByYear" resultType="com.jmu.book.entity.BookBig" parameterType="java.lang.Integer">
+        SELECT * FROM tb_book_big where year = #{year} ORDER BY (cast(comment_num as SIGNED)*cast(recommend as SIGNED)/100) DESC LIMIT 3;
+  </select>
 </mapper>

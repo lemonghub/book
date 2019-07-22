@@ -24,4 +24,13 @@ public class BookBigServiceImpl implements BookBigService {
             System.out.println(list);
         }
     }
+
+    @Override
+    public List<BookBig> selectTopThreeBookByYear(Integer year) {
+        List<BookBig> list = bookBigMapper.selectTopThreeBookByYear(year);
+
+        return list;
+    }
+
+
 }

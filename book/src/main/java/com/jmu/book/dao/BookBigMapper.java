@@ -18,4 +18,8 @@ public interface BookBigMapper {
      * @return
      */
     List<BookBig> selectTopTenEveryYearCategory(int topNum);
+
+
+    //按照年份查询最受欢迎的前三本书
+    List<BookBig> selectTopThreeBookByYear(Integer year);
 }
