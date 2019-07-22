@@ -124,8 +124,23 @@
     </trim>
   </insert>
 
-  <!--按照年份查询-->
-  <select id="selectTopThreeBookByYear" resultType="com.jmu.book.entity.BookBig" parameterType="java.lang.Integer">
-        SELECT * FROM tb_book_big where year = #{year} ORDER BY (cast(comment_num as SIGNED)*cast(recommend as SIGNED)/100) DESC LIMIT 3;
+  <!--获取所有图书类别-->
+  <select id="findAllCategory" resultType="String">
+    select distinct category_name from tb_book_big;
+  </select>
+
+  <!--按照年份查询图书类别-->
+  <select id="findCategoryByYear" resultType="String" parameterType="java.lang.Integer">
+    select distinct category_name from tb_book_big where year = #{year};
+  </select>
+
+  <!--查找所有年份-->
+  <select id="findAllYear" resultType="String">
+    select distinct year from tb_book_big;
+  </select>
+
+  <!--按照年份和类别查询查询-->
+  <select id="selectTopThreeBookByYear" resultType="com.jmu.book.entity.BookBig" parameterType="String">
+    SELECT * FROM tb_book_big where year = #{year} and category_name = #{category} ORDER BY (cast(comment_num as SIGNED)*cast(recommend as SIGNED)/100) DESC LIMIT 3;
   </select>
 </mapper>

@@ -26,9 +26,23 @@ public class BookBigServiceImpl implements BookBigService {
     }
 
     @Override
-    public List<BookBig> selectTopThreeBookByYear(Integer year) {
-        List<BookBig> list = bookBigMapper.selectTopThreeBookByYear(year);
+    public List<String> findAllCategory() {
+        return bookBigMapper.findAllCategory();
+    }
 
+    @Override
+    public List<String> findCategoryByYear(Integer year) {
+        return bookBigMapper.findCategoryByYear(year);
+    }
+
+    @Override
+    public List<String> findAllYear() {
+        return bookBigMapper.findAllYear();
+    }
+
+    @Override
+    public List<BookBig> selectTopThreeBookByYear(String year,String category) {
+        List<BookBig> list = bookBigMapper.selectTopThreeBookByYear(year,category);
         return list;
     }
 
