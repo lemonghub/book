@@ -23,7 +23,7 @@
     
     <javaClientGenerator targetPackage="com.jmu.book.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
-      <table tableName="tb_category" domainObjectName="Category"
+      <table tableName="tb_book_price_share" domainObjectName="BookPriceShare"
              enableCountByExample="false" enableUpdateByExample="false"
              enableDeleteByExample="false" enableSelectByExample="false"
              selectByExampleQueryId="false">
