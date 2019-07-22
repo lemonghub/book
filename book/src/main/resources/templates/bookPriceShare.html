@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="asserts/js/dashboard.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="asserts/css/dashboard.css" />
+<link rel="stylesheet" type="text/css" href="asserts/css/bootstrap.min.css" />
+
+<script src="asserts/js/echarts.min.js"></script>
+<script>
+    function sub_() {
+        var val1 = $("#sel1 option:selected").text();
+        var val2 = $("#sel2 option:selected").text();
+        $.ajax({
+            type:'post',
+            url:'/book/doBookPriceShare',
+            dataType:'json',
+            data:{year:val1,categoryName:val2},
+            success:function (data) {
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                app.title = '环形图';
+
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b}: {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        x: 'left',
+                        data:['0-30元','30-50元','50-80元','80-100元','100元以上']
+                    },
+                    series: [
+                        {
+                            name:'价格',
+                            type:'pie',
+                            radius: ['50%', '70%'],
+                            avoidLabelOverlap: false,
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'center'
+                                },
+                                emphasis: {
+                                    show: true,
+                                    textStyle: {
+                                        fontSize: '30',
+                                        fontWeight: 'bold'
+                                    }
+                                }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data:[
+                                {value:data.percent1, name:'0-30元'},
+                                {value:data.percent2, name:'30-50元'},
+                                {value:data.percent3, name:'50-80元'},
+                                {value:data.percent4, name:'80-100元'},
+                                {value:data.percent5, name:'100元以上'}
+                            ]
+                        }
+                    ]
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        sub_();
+    })
+</script>
+
+
+
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height: 48px;">
+    <div><font style="color: white;margin-left: 20px;">大数据</font></div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/book/bookPriceShare">
+                            <!--<span data-feather="home"></span>-->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            年份价格分析
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            Products
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">年份价格分析</h1>
+            </div>
+
+            <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380">-->
+
+            <select id="sel1" onchange="sub_()">
+                <option th:each="year:${list.get(0)}">[[${year}]]</option>
+            </select>
+            <select id="sel2" onchange="sub_()">
+                <option th:each="categoryName:${list.get(1)}">[[${categoryName}]]</option>
+            </select>
+
+
+            <div id="container" style="width: 600px;height:400px;"></div>
+
+            <!--</canvas>-->
+
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
