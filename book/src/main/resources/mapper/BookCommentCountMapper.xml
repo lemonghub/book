@@ -6,35 +6,12 @@
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
     <result column="comment_count" property="commentCount" jdbcType="BIGINT" />
   </resultMap>
-  <insert id="insert" parameterType="com.jmu.book.entity.BookCommentCount" >
-    insert into tb_book_comment_count (year, category_name, comment_count
-      )
-    values (#{year,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, #{commentCount,jdbcType=BIGINT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.jmu.book.entity.BookCommentCount" >
-    insert into tb_book_comment_count
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="year != null" >
-        year,
-      </if>
-      <if test="categoryName != null" >
-        category_name,
-      </if>
-      <if test="commentCount != null" >
-        comment_count,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="year != null" >
-        #{year,jdbcType=VARCHAR},
-      </if>
-      <if test="categoryName != null" >
-        #{categoryName,jdbcType=VARCHAR},
-      </if>
-      <if test="commentCount != null" >
-        #{commentCount,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
+  <select id="findByYearOrCategory" resultType="com.jmu.book.entity.BookCommentCount" parameterType="String">
+    <if test="year != null">
+      select * from tb_book_comment_count where year = #{year}
+    </if>
+    <if test="category != null">
+      select * from tb_book_comment_count where category_name = #{category}
+    </if>
+  </select>
 </mapper>
