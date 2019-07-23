@@ -58,7 +58,7 @@ public class BookBigController {
     }
 
     //List转json字符串的方法
-    public String ListToJson(List<?> list){
+    public static String ListToJson(List<?> list){
         ObjectMapper obj = new ObjectMapper();
         String json = null;
         try {
