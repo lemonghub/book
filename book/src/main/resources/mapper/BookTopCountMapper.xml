@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmu.book.dao.BookTopCountMapper">
+  <resultMap id="BaseResultMap" type="com.jmu.book.entity.BookTopCount">
+    <result column="year" jdbcType="VARCHAR" property="year" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+  </resultMap>
+  <select id="findRankCateGoryByYear" parameterType="String" resultType="String">
+    SELECT category_name from tb_book_top_count where year = #{year}
+  </select>
+  
+  <select id="findRatioByYearAndCategory" parameterType="String" resultType="java.lang.Double">
+    select tb1.book_count/book_sum from
+    (select tb_book_top_count.count as book_count from tb_book_top_count
+                                where category_name = #{category} and year = #{year}) as tb1,
+    (select sum(tb_book_top_count.count) as book_sum from tb_book_top_count
+                                where year = #{year}) as tb2;
+  </select>
+</mapper>
