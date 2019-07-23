@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jmu.book.dao.BookBigMapper" >
-  <resultMap id="BaseResultMap" type="com.jmu.book.entity.BookBig" >
+<mapper namespace="com.jmu.book.dao.BookTopMapper" >
+  <resultMap id="BaseResultMap" type="com.jmu.book.entity.BookTop" >
     <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
     <result column="list_num" property="listNum" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
@@ -18,23 +18,21 @@
     <result column="year" property="year" jdbcType="VARCHAR" />
   </resultMap>
 
-  <!--获取所有图书类别-->
-  <select id="findAllCategory" resultType="String">
-    select distinct category_name from tb_book_big;
+  <resultMap id="BaseResultMap1" type="com.jmu.book.entity.BookRank" >
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="list_num" property="ranking" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="findTopTenBookName" resultType="String">
+    select book_name from tb_book_top group by book_name ORDER BY count(Book_name) DESC LIMIT 10;
   </select>
 
-  <!--按照年份查询图书类别-->
-  <select id="findCategoryByYear" resultType="String" parameterType="java.lang.Integer">
-    select distinct category_name from tb_book_big where year = #{year};
+  <select id="findTopTenCount" resultType="String" parameterType="String">
+    select count(book_name) from tb_book_top where book_name = #{bookName}
   </select>
 
-  <!--查找所有年份-->
-  <select id="findAllYear" resultType="String">
-    select distinct year from tb_book_big;
-  </select>
-
-  <!--按照年份和类别查询查询-->
-  <select id="selectTopThreeBookByYear" resultType="com.jmu.book.entity.BookBig" parameterType="String">
-    SELECT * FROM tb_book_big where year = #{year} and category_name = #{category} ORDER BY (cast(comment_num as SIGNED)*cast(recommend as SIGNED)/100) DESC LIMIT 3;
+  <select id="bookAllRank" resultMap="BaseResultMap1" resultType="com.jmu.book.entity.BookRank" parameterType="String">
+    select book_name,year,list_num from tb_book_top where book_name = #{bookName} order by year asc
   </select>
 </mapper>

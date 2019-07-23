@@ -9,15 +9,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BookBigMapper {
-    int insert(BookBig record);
-
-    int insertSelective(BookBig record);
-
-    /**
-     * 查询每年前十的所有分类榜单
-     * @return
-     */
-    List<BookBig> selectTopTenEveryYearCategory(int topNum);
 
     //获取所有类别
     List<String> findAllCategory();

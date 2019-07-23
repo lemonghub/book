@@ -23,11 +23,6 @@ public class BookBigServiceTest {
 
     @Autowired
     private BookBigService bookBigService;
-    @Test
-    public void Test(){
-
-        bookBigService.selectEveryTopTenBook(5);
-    }
 
     //按照年份和类别查询每年欢迎度前三的图书测试
     @Test

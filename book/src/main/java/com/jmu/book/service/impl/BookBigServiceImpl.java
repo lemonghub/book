@@ -18,14 +18,6 @@ public class BookBigServiceImpl implements BookBigService {
     private BookBigMapper bookBigMapper;
 
     @Override
-    public void selectEveryTopTenBook(int topNum) {
-        List<BookBig> list = bookBigMapper.selectTopTenEveryYearCategory(topNum);
-        for (BookBig bookBig:list){
-            System.out.println(list);
-        }
-    }
-
-    @Override
     public List<String> findAllCategory() {
         return bookBigMapper.findAllCategory();
     }

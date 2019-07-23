@@ -24,7 +24,7 @@
     
     <javaClientGenerator targetPackage="com.jmu.book.dao" targetProject="src/main/java" type="XMLMAPPER" />
 
-      <table tableName="tb_book_comment_count" domainObjectName="BookCommentCount"
+      <table tableName="tb_book_top" domainObjectName="BookTop"
              enableCountByExample="false" enableUpdateByExample="false"
              enableDeleteByExample="false" enableSelectByExample="false"
              selectByExampleQueryId="false">

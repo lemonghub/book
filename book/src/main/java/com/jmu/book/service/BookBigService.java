@@ -10,8 +10,6 @@ import java.util.List;
  **/
 public interface BookBigService {
 
-    public void selectEveryTopTenBook(int topNum);
-
     //获取所有类别
     List<String> findAllCategory();
 

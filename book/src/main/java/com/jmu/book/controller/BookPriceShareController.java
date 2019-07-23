@@ -33,6 +33,4 @@ public class BookPriceShareController {
 
         return bookPriceShareService.selectBookPriceShareByYearAndCategoryName(year,categoryName);
     }
-
-
 }
