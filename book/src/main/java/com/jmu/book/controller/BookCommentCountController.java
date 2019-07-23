@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +22,17 @@ public class BookCommentCountController {
 
     //查所有年份和图书类别
     @RequestMapping("/findYearAndCategory1")
-    public String findYearAndCategory1(){
+    public String findYearAndCategory1(Model model,String flag){
         List<String> list1 = bookBigService.findAllYear();
         List<String> list2 = bookBigService.findAllCategory();
         List<List<String>> list = new ArrayList<>();
         list.add(list1);
         list.add(list2);
-        return "findByYearOrCategory";
+        model.addAttribute("list",list);
+        if("1".equals(flag))
+            return "BookCommentCountForYear";
+        else
+            return "BookCommentCountForCategory";
     }
 
     //按照年份或者图书类别查图书评论数
