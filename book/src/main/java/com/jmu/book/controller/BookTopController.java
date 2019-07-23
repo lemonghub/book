@@ -27,6 +27,14 @@ public class BookTopController {
         return BookBigController.ListToJson(list1);
     }
 
+    //返回入榜前10的书名和入榜次数
+    @RequestMapping("findTopTenNameAndCount")
+    @ResponseBody
+    public String findTopTenNameAndCount(){
+        List<List<String>> list = findBookNameAndCount();
+        return BookBigController.ListToJson(list);
+    }
+
     /*
     * 查找前入围次数最多的前十本书的书名和入围次数
     * 返回二维数组，二维数组中第一个数组是书名，第二个数组是对应的入榜次数
