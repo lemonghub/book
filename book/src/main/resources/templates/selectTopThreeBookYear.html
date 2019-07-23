@@ -15,64 +15,19 @@
         var val1 = $("#sel1 option:selected").text();
         var val2 = $("#sel2 option:selected").text();
         $.ajax({
-            type:'post',
-            url:'/book/doBookPriceShare',
-            dataType:'json',
-            data:{year:val1,categoryName:val2},
-            success:function (data) {
-                var dom = document.getElementById("container");
-                var myChart = echarts.init(dom);
-                var app = {};
-                option = null;
-                app.title = '环形图';
-
-                option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b}: {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        x: 'left',
-                        data:['0-30元','30-50元','50-80元','80-100元','100元以上']
-                    },
-                    series: [
-                        {
-                            name:'价格',
-                            type:'pie',
-                            radius: ['50%', '70%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                normal: {
-                                    show: false,
-                                    position: 'center'
-                                },
-                                emphasis: {
-                                    show: true,
-                                    textStyle: {
-                                        fontSize: '30',
-                                        fontWeight: 'bold'
-                                    }
-                                }
-                            },
-                            labelLine: {
-                                normal: {
-                                    show: false
-                                }
-                            },
-                            data:[
-                                {value:data.percent1, name:'0-30元'},
-                                {value:data.percent2, name:'30-50元'},
-                                {value:data.percent3, name:'50-80元'},
-                                {value:data.percent4, name:'80-100元'},
-                                {value:data.percent5, name:'100元以上'}
-                            ]
-                        }
-                    ]
-                };
-                if (option && typeof option === "object") {
-                    myChart.setOption(option, true);
+            type: 'post',
+            url: '/book/selectTopThreeBookByYear',
+            dataType: 'json',
+            data: {year: val1, category: val2},
+            success: function (data) {
+                for(var i=0;i<3;i++){
+                    // alert(data[i].bookName)
+                    $("#img"+i).attr("src",data[i].image)
+                    $("#inp1_"+i).val(data[i].bookName);
+                    $("#inp2_"+i).val("作者："+data[i].author);
+                    $("#inp3_"+i).val("价格："+data[i].currentPrice);
                 }
+
             }
         });
     }
@@ -82,7 +37,13 @@
     })
 </script>
 
-
+<style>
+    input{
+        border:none;
+        max-width:300px;
+        text-align: center
+    }
+</style>
 
 <body>
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height: 48px;">
@@ -94,15 +55,15 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/book/bookPriceShare">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/book/bookPriceShare">
                             <!--<span data-feather="home"></span>-->
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             年份价格分析
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/book/findAllYearAndCategory">
+                        <a class="nav-link active" href="/book/findAllYearAndCategory">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             每年欢迎度前三
                         </a>
@@ -119,7 +80,7 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">年份价格分析</h1>
+                <h1 class="h2">每年欢迎度前三</h1>
             </div>
 
 
@@ -130,8 +91,33 @@
                 <option th:each="categoryName:${list.get(1)}">[[${categoryName}]]</option>
             </select>
 
+            <div class="container" style="margin-top: 50px;">
+                <div class="row clearfix text-center">
+                    <div class="col-md-12 column">
+                        <div class="row clearfix">
+                            <div class="col-md-4 column item text-center">
+                                <img src="http://img3m0.ddimg.cn/9/27/22880790-1_l_2.jpg" style="width:200px;" id="img0"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp1_0"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp2_0"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp3_0"><br/>
 
-            <div id="container" style="width: 600px;height:400px;"></div>
+                            </div>
+                            <div class="col-md-4 column item text-center">
+                                <img src="http://img3m0.ddimg.cn/9/27/22880790-1_l_2.jpg" style="width:200px;" id="img1"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp1_1"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp2_1"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp3_1"><br/>
+                            </div>
+                            <div class="col-md-4 column item text-center">
+                                <img src="http://img3m0.ddimg.cn/9/27/22880790-1_l_2.jpg" style="width:200px;" id="img2"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp1_2"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp2_2"><br/>
+                                <input type="text" value="" readonly="readonly" id="inp3_2"><br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </main>

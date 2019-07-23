@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -66,6 +67,18 @@ public class BookBigController {
             e.printStackTrace();
         }
         return json;
+    }
+
+    //所有年份和图书类别
+    @RequestMapping("/findAllYearAndCategory")
+    public String findAllYearAndCategory(Model model){
+        List<String> list1 = bookBigService.findAllYear();
+        List<String> list2 = bookBigService.findAllCategory();
+        List<List<String>> list = new ArrayList<>();
+        list.add(list1);
+        list.add(list2);
+        model.addAttribute("list",list);
+        return "selectTopThreeBookYear";
     }
 
 }
