@@ -24,6 +24,12 @@ public class BookTopController {
         return BookBigController.ListToJson(list1);
     }
 
+    @RequestMapping("/findTopTen_")
+    public String findTopTen_(){
+
+        return "findTopTen";
+    }
+
     //返回入榜前10的书名和入榜次数
     @RequestMapping("findTopTenNameAndCount")
     @ResponseBody

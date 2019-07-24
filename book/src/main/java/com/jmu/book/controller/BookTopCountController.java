@@ -1,6 +1,7 @@
 package com.jmu.book.controller;
 
 import com.jmu.book.entity.BookTopCount;
+import com.jmu.book.service.BookPriceShareService;
 import com.jmu.book.service.BookTopCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,15 @@ import java.util.List;
 public class BookTopCountController {
     @Autowired
     private BookTopCountService bookTopCountService;
+    @Autowired
+    private BookPriceShareService bookPriceShareService;
+
+    @RequestMapping("/findRatioByYearAndCategory_")
+    public String findRatioByYearAndCategory_(Model model) {
+        List<String> list =  bookPriceShareService.selectAllYear();
+        model.addAttribute("list",list);
+        return "findRatioByYearAndCategory";
+    }
 
     //根据年份获取当年所有的图书类别
     @RequestMapping("/findBookCategorybyYear")

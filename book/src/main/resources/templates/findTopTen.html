@@ -15,101 +15,48 @@
         var val1 = $("#sel1 option:selected").text();
         $.ajax({
             type: 'post',
-            url: '/book/findByYearOrCategory',
+            url: '/book/findTopTen',
             dataType: 'json',
-            data: {year: val1},
             success: function (data) {
-                var categoryName = [];
-                var commentCount = [];
+                var arr1 = [];
                 for(var i=0;i<data.length;i++){
-                    categoryName.push(data[i].categoryName);
-                    commentCount.push(data[i].commentCount);
+                    var arr2 = [];
+                    for(var j=0;j<data[i].length;j++){
+                        arr2.push(data[i][j].ranking);
+                    }
+                    arr1.push(arr2);
                 }
-                val1 = val1+"年";
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
                 var app = {};
                 option = null;
-                app.title = '';
+
 
                 option = {
-                    title: {
-                        text: '书籍评论总数'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    legend: {
-                        data: [val1]
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'value',
-                        boundaryGap: [0, 0.01]
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: categoryName
-                    },
-                    series: [
-                        {
-                            name: val1,
-                            type: 'bar',
-                            data: commentCount
-                        }
-                    ]
-                };
-                ;
-                if (option && typeof option === "object") {
-                    myChart.setOption(option, true);
-                }
-
-
-                //折线图
-                /*var dom = document.getElementById("container");
-                var myChart = echarts.init(dom);
-                var app = {};
-                option = null;
-                option = {
-                    title: {
-                        text: '堆叠区域图'
+                    title : {
                     },
                     tooltip : {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'cross',
-                            label: {
-                                backgroundColor: '#6a7985'
-                            }
-                        }
+                        trigger: 'axis'
                     },
                     legend: {
-                        data:['评论总数']
+                        data:['小熊和最好的爸爸','斯凯瑞金色童书','信谊世界精选图画书','小兔汤姆系列','法布尔昆虫记','月亮的味道','牧羊少年奇幻之旅','家常菜精选1288例','I SPY视觉大发现','信谊世界精选图画书']
                     },
                     toolbox: {
-                        feature: {
-                            saveAsImage: {}
+                        show : false,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
                         }
                     },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
+                    calculable : true,
                     xAxis : [
                         {
                             type : 'category',
                             boundaryGap : false,
-                            data : categoryName
+                            data : ['2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018']
                         }
                     ],
                     yAxis : [
@@ -119,18 +66,81 @@
                     ],
                     series : [
                         {
-                            name:'评论总数',
+                            name:'小熊和最好的爸爸',
                             type:'line',
-                            stack: '总量',
-                            areaStyle: {},
-                            data:commentCount
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[0]
+                        },
+                        {
+                            name:'斯凯瑞金色童书',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[1]
+                        },
+                        {
+                            name:'信谊世界精选图画书',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[2]
+                        },
+                        {
+                            name:'小兔汤姆系列',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[3]
+                        },
+                        {
+                            name:'法布尔昆虫记',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[4]
+                        },
+                        {
+                            name:'月亮的味道',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[5]
+                        },
+                        {
+                            name:'牧羊少年奇幻之旅',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[6]
+                        },
+                        {
+                            name:'家常菜精选1288例',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[7]
+                        },
+                        {
+                            name:'I SPY视觉大发现',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[8]
+                        },
+                        {
+                            name:'信谊世界精选图画书',
+                            type:'line',
+                            smooth:true,
+                            itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data:arr1[9]
                         }
                     ]
                 };
-                ;
+
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
-                }*/
+                }
 
 
             }
@@ -176,13 +186,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/book/findYearAndCategory1?flag=1">
+                        <a class="nav-link" href="/book/findYearAndCategory1?flag=1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             书籍年份评论分析
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/book/findTopTen_">
+                        <a class="nav-link active" href="/book/findTopTen_">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                             书籍前十分析
                         </a>
@@ -199,15 +209,13 @@
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">书籍年份评论分析</h1>
+                <h1 class="h2">书籍前十分析</h1>
             </div>
 
 
-            <select id="sel1" onchange="sub_()">
-                <option th:each="year:${list.get(0)}">[[${year}]]</option>
-            </select>
 
-            <div id="container" style="width: 1000px;height:1000px; margin-left: 20px;"></div>
+
+            <div id="container" style="width: 1000px;height:500px; margin-left: 20px;"></div>
 
 
         </main>

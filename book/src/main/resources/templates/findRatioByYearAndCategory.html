@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="asserts/js/dashboard.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="asserts/css/dashboard.css" />
+<link rel="stylesheet" type="text/css" href="asserts/css/bootstrap.min.css" />
+
+<script src="asserts/js/echarts.min.js"></script>
+<script>
+    function sub_() {
+        var val1 = $("#sel1 option:selected").text();
+        var val2 = $("#sel2 option:selected").text();
+        $.ajax({
+            type:'post',
+            url:'/book/findRatioByYearAndCategory',
+            dataType:'json',
+            data:{year:val1},
+            success:function (data) {
+                var tmp = [];
+                for(var i=0;i<data[0].length;i++){
+                    var o = new Object();
+                    o.name = data[0][i];
+                    o.value = data[1][i];
+                    tmp.push(o);
+                }
+                var dom = document.getElementById("container");
+                var myChart = echarts.init(dom);
+                var app = {};
+                option = null;
+                app.title = '环形图';
+
+                option = {
+                    title : {
+                        text: '图书top榜',
+                        x:'right',
+                        y:'bottom'
+                    },
+                    tooltip : {
+                        trigger: 'item',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient : 'vertical',
+                        x : 'left',
+                        data:data[0]
+                    },
+                    toolbox: {
+                        show : true,
+                        feature : {
+                            mark : {show: true},
+                            dataView : {show: true, readOnly: false},
+                            restore : {show: true},
+                            saveAsImage : {show: true}
+                        }
+                    },
+                    calculable : false,
+                    series : (function (){
+                        var series = [];
+                        for (var i = 0; i < 30; i++) {
+                            series.push({
+                                name:'图书top榜',
+                                type:'pie',
+                                itemStyle : {normal : {
+                                        label : {show : i > 28},
+                                        labelLine : {show : i > 28, length:20}
+                                    }},
+                                radius : [i * 4 + 40, i * 4 + 43],
+                                data:tmp
+                            })
+                        }
+                        series[0].markPoint = {
+                            symbol:'emptyCircle',
+                            symbolSize:series[0].radius[0],
+                            effect:{show:true,scaleSize:12,color:'rgba(250,225,50,0.8)',shadowBlur:10,period:30},
+                            data:[{x:'50%',y:'50%'}]
+                        };
+                        return series;
+                    })()
+                };
+                /*setTimeout(function (){
+                    var _ZR = myChart.getZrender();
+                    var TextShape = require('zrender/shape/Text');
+                    // 补充千层饼
+                    _ZR.addShape(new TextShape({
+                        style : {
+                            x : _ZR.getWidth() / 2,
+                            y : _ZR.getHeight() / 2,
+                            color: '#666',
+                            text : '恶梦的过去',
+                            textAlign : 'center'
+                        }
+                    }));
+                    _ZR.addShape(new TextShape({
+                        style : {
+                            x : _ZR.getWidth() / 2 + 200,
+                            y : _ZR.getHeight() / 2,
+                            brushType:'fill',
+                            color: 'orange',
+                            text : '美好的未来',
+                            textAlign : 'left',
+                            textFont:'normal 20px 微软雅黑'
+                        }
+                    }));
+                    _ZR.refresh();
+                }, 2000);*/
+
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        sub_();
+    })
+</script>
+
+
+
+<body>
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="height: 48px;">
+    <div><font style="color: white;margin-left: 20px;">大数据</font></div>
+</nav>
+
+<div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/bookPriceShare">
+                                <!--<span data-feather="home"></span>-->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                年份价格分析
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/findAllYearAndCategory">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                每年欢迎度前三
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/findYearAndCategory1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                书籍类别评论分析
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/findYearAndCategory1?flag=1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                书籍年份评论分析
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/book/findTopTen_">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                书籍前十分析
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/book/findRatioByYearAndCategory_">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                图书top榜分析
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> 图书top榜分析</h1>
+            </div>
+
+            <select id="sel1" onchange="sub_()" style="float: right;margin-right: 8px;">
+                <option th:each="year:${list}">[[${year}]]</option>
+            </select>
+
+
+            <div id="container" style="width: 900px;height:500px;margin-top: 20px;margin-left: 20px;"></div>
+
+
+        </main>
+    </div>
+</div>
+
+</body>
+<!--<script src="asserts/js/map.js"></script>-->
+</html>
