@@ -62,6 +62,7 @@ public class BookTopController {
                     bookRank.setRanking("0");
                     bookRank.setYear(year.toString());
                     list3.add(bookRank);
+                    j--;
                 }
                 else{
                     list3.add(list2.get(j));
