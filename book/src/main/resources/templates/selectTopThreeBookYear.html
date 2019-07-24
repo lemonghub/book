@@ -24,6 +24,7 @@
                     // alert(data[i].bookName)
                     $("#img"+i).attr("src",data[i].image)
                     $("#inp1_"+i).val(data[i].bookName);
+                    $("#inp1_"+i).attr("title",data[i].bookName);
                     $("#inp2_"+i).val("作者："+data[i].author);
                     $("#inp3_"+i).val("价格："+data[i].currentPrice);
                 }
@@ -102,10 +103,10 @@
             </div>
 
 
-            <select id="sel1" onchange="sub_()">
-                <option th:each="year:${list.get(0)}">[[${year}]]</option>
+            <select id="sel1" onchange="sub_()" class="form-control-lg ">
+                <option th:each="year:${list.get(0)}" >[[${year}]]</option>
             </select>
-            <select id="sel2" onchange="sub_()">
+            <select id="sel2" onchange="sub_()" class="form-control-lg ">
                 <option th:each="categoryName:${list.get(1)}">[[${categoryName}]]</option>
             </select>
 

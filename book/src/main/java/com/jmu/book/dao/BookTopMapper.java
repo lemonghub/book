@@ -3,6 +3,7 @@ package com.jmu.book.dao;
 import com.jmu.book.entity.BookRank;
 import com.jmu.book.entity.BookTop;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public interface BookTopMapper {
     public List<String> findTopTenBookName();
 
     //根据书名获取它的的入榜次数
-    public String findTopTenCount(String bookName);
+    public String findTopTenCount(@Param("bookName")String bookName);
 
     //根据书名获取其入榜的年份和排名
-    public List<BookRank> bookAllRank(String bookName);
+    public List<BookRank> bookAllRank(@Param("bookName")String bookName);
 }
