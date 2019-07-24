@@ -5,6 +5,9 @@ public class BookRank {
     private String year;//年份
     private String ranking;//排名
 
+    public BookRank() {
+    }
+
     public String getBookName() {
         return bookName;
     }

@@ -1,14 +1,14 @@
 package com.jmu.book.ServiceTest;
 
 import com.jmu.book.entity.BookBig;
+import com.jmu.book.entity.BookRank;
 import com.jmu.book.service.BookBigService;
-import com.jmu.book.service.impl.BookBigServiceImpl;
+import com.jmu.book.service.BookTopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,32 @@ public class BookBigServiceTest {
 
     @Autowired
     private BookBigService bookBigService;
+
+    @Autowired
+    private BookTopService bookTopService;
+
+    @Test
+    public void test5(){
+        List<String> list = bookTopService.findTopTenBookName();
+        for (int i = 0; i < list.size(); i++) {
+            List<BookRank> list1 = bookTopService.bookAllRank(list.get(i));
+            List<BookRank> list2 = new ArrayList<>();
+//            System.out.println(list1);
+            Integer year = 2008;
+            for (int j = 0; j < list1.size(); j++) {
+                if(!year.toString().equals(list1.get(j).getYear())){
+                    BookRank bookRank = new BookRank();
+                    bookRank.setBookName(list1.get(j).getBookName());
+                    bookRank.setRanking("0");
+                    bookRank.setYear(year.toString());
+                    list2.add(bookRank);
+                }else{
+                    list2.add(list1.get(j));
+                }
+            }
+            System.out.println(list2.toString());
+        }
+    }
 
     //按照年份和类别查询每年欢迎度前三的图书测试
     @Test

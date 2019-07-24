@@ -20,10 +20,7 @@ public class BookTopController {
     @ResponseBody
     public String findTopTen(){
         List<List<String>> list = findBookNameAndCount();
-        List<List<BookRank>> list1 = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list1.add(bookTopService.bookAllRank(list.get(0).get(i)));
-        }
+        List<List<BookRank>> list1 = replenish(list);
         return BookBigController.ListToJson(list1);
     }
 
@@ -50,5 +47,37 @@ public class BookTopController {
         list.add(list1);    //书名
         list.add(list2);    //入榜次数
         return list;
+    }
+
+    public List<List<BookRank>> replenish(List<List<String>> list){
+        List<List<BookRank>> list1 = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            List<BookRank> list2 = this.bookTopService.bookAllRank(list.get(0).get(i));
+            List<BookRank> list3 = new ArrayList<>();
+            Integer year = 2008;
+            for (int j = 0; j < list2.size(); j++) {
+                if(!year.toString().equals(list2.get(j).getYear())){
+                    BookRank bookRank = new BookRank();
+                    bookRank.setBookName(list2.get(j).getBookName());
+                    bookRank.setRanking("0");
+                    bookRank.setYear(year.toString());
+                    list3.add(bookRank);
+                }
+                else{
+                    list3.add(list2.get(j));
+                }
+                year++;
+            }
+            while(!"2019".equals(year.toString())){
+                BookRank bookRank = new BookRank();
+                bookRank.setBookName(list2.get(0).getBookName());
+                bookRank.setRanking("0");
+                bookRank.setYear(year.toString());
+                list3.add(bookRank);
+                year++;
+            }
+            list1.add(list3);
+        }
+        return list1;
     }
 }
