@@ -3,6 +3,7 @@ package com.jmu.book.ServiceTest;
 import com.jmu.book.entity.BookBig;
 import com.jmu.book.entity.BookRank;
 import com.jmu.book.service.BookBigService;
+import com.jmu.book.service.BookTopCountService;
 import com.jmu.book.service.BookTopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,42 @@ public class BookBigServiceTest {
 
     @Autowired
     private BookTopService bookTopService;
+
+    @Autowired
+    private BookTopCountService bookTopCountService;
+
+    @Test
+    public void test6(){
+        List<String> list1= bookTopCountService.findRankCateGoryByYear("2014");
+        List<String> list2 = new ArrayList<>();
+        for (String s : list1) {
+            Double ratio = bookTopCountService.findRatioByYearAndCategory("2014",s);
+            list2.add(ratio.toString());
+        }
+        System.out.println(list1);
+        System.out.println(list2);
+        for (int i = 0; i < list2.size() - 1; i++) {
+            int k = i;
+            for (int j = i + 1; j < list2.size(); j++) {
+                double listj = Double.parseDouble(list2.get(j));
+                double listk = Double.parseDouble(list2.get(k));
+                if(listj < listk){
+                    k = j;
+                }
+            }
+            if(k != i){
+                String temp1 = list2.get(i);
+                list2.set(i, list2.get(k));
+                list2.set(k, temp1);
+
+                String temp2 = list1.get(i);
+                list1.set(i, list1.get(k));
+                list1.set(k, temp2);
+            }
+        }
+        System.out.println(list1);
+        System.out.println(list2);
+    }
 
     @Test
     public void test5(){
