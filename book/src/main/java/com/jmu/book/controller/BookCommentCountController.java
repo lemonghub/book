@@ -55,4 +55,12 @@ public class BookCommentCountController {
         }
         return BookBigController.ListToJson(list);
     }
+
+    //预测分析2019推荐前三
+    @RequestMapping("/findTopThreeRecommend")
+    @ResponseBody
+    public String findTopThreeRecommend(){
+        List<BookCommentCount> list = bookCommentCountService.findTopThreeRecommend();
+        return BookBigController.ListToJson(list);
+    }
 }

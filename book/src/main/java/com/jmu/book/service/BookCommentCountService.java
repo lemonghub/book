@@ -7,4 +7,6 @@ import java.util.List;
 public interface BookCommentCountService {
 
     public List<BookCommentCount> findByYearOrCategory(String year, String category);
+
+    public List<BookCommentCount> findTopThreeRecommend();
 }

@@ -14,4 +14,7 @@
       select * from tb_book_comment_count where category_name = #{category}
     </if>
   </select>
+  <select id="findTopThreeRecommend" resultType="com.jmu.book.entity.BookCommentCount">
+    select * from tb_book_comment_count where year = '2019' order by comment_count DESC limit 3;
+  </select>
 </mapper>

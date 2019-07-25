@@ -1,8 +1,10 @@
 package com.jmu.book.ServiceTest;
 
 import com.jmu.book.entity.BookBig;
+import com.jmu.book.entity.BookCommentCount;
 import com.jmu.book.entity.BookRank;
 import com.jmu.book.service.BookBigService;
+import com.jmu.book.service.BookCommentCountService;
 import com.jmu.book.service.BookTopCountService;
 import com.jmu.book.service.BookTopService;
 import org.junit.Test;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +34,28 @@ public class BookBigServiceTest {
 
     @Autowired
     private BookTopCountService bookTopCountService;
+
+    @Autowired
+    private BookCommentCountService bookCommentCountService;
+
+    @Test
+    public void test7() throws IOException {
+        List<String> catelist = bookBigService.findAllCategory();
+        FileWriter fileWriter = new FileWriter("E://a.txt");
+        for (String s : catelist) {
+            List<BookCommentCount> list = bookCommentCountService.findByYearOrCategory(null, s);
+
+            String tem = list.get(0).getCategoryName() + " "
+                    + list.get(0).getCommentCount() + " "
+                    + list.get(1).getCommentCount() + " "
+                    + list.get(2).getCommentCount() + " "
+                    + list.get(3).getCommentCount() + " "
+                    + list.get(4).getCommentCount() + "\r\n";
+            fileWriter.write(tem);
+            fileWriter.flush();
+        }
+        fileWriter.close();
+    }
 
     @Test
     public void test6(){

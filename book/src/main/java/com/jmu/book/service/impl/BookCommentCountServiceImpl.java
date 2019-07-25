@@ -18,4 +18,9 @@ public class BookCommentCountServiceImpl implements BookCommentCountService {
     public List<BookCommentCount> findByYearOrCategory(String year, String category) {
         return bookCommentCountMapper.findByYearOrCategory(year, category);
     }
+
+    @Override
+    public List<BookCommentCount> findTopThreeRecommend() {
+        return bookCommentCountMapper.findTopThreeRecommend();
+    }
 }

@@ -12,4 +12,6 @@ import java.util.List;
 public interface BookCommentCountMapper {
 
     public List<BookCommentCount> findByYearOrCategory(@Param("year")String year, @Param("category")String category);
+
+    public List<BookCommentCount> findTopThreeRecommend();
 }
