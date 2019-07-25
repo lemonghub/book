@@ -71,7 +71,10 @@ public class BookTopController {
                     j--;
                 }
                 else{
-                    list3.add(list2.get(j));
+                    BookRank b = list2.get(j);
+                    String ranking = (500 - Integer.parseInt(b.getRanking())) + "";
+                    b.setRanking(ranking);
+                    list3.add(b);
                 }
                 year++;
             }
