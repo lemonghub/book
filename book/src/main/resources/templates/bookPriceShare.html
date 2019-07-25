@@ -150,10 +150,10 @@
             </div>
 
 
-            <select id="sel2" onchange="sub_()" style="float: right;">
+            <select id="sel2" onchange="sub_()" style="float: right;" class="form-control-lg ">
                 <option th:each="categoryName:${list.get(1)}">[[${categoryName}]]</option>
             </select>
-            <select id="sel1" onchange="sub_()" style="float: right;margin-right: 8px;">
+            <select id="sel1" onchange="sub_()" style="float: right;margin-right: 8px;" class="form-control-lg ">
                 <option th:each="year:${list.get(0)}">[[${year}]]</option>
             </select>
 

@@ -205,9 +205,11 @@
                 <h1 class="h2">书籍类别评论分析</h1>
             </div>
 
-            <select id="sel2" onchange="sub_()">
+            <div align="right">
+            <select id="sel2" onchange="sub_()" class="form-control-lg " >
                 <option th:each="categoryName:${list.get(1)}">[[${categoryName}]]</option>
             </select>
+            </div>
 
 
             <div id="container" style="width: 1000px;height:450px; margin-left: 20px;"></div>
