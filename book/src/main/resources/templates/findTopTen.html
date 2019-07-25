@@ -39,7 +39,18 @@
                         trigger: 'axis'
                     },
                     legend: {
-                        data:['小熊和最好的爸爸（全7册）','法布尔昆虫记（全10册）（儿童彩图版）','月亮的味道','斯凯瑞金色童书・第一辑（全4册）','小兔汤姆系列（第一辑）（全六册 ）','信谊世界精选图画书・爷爷一定有办法','青蛙弗洛格的成长故事（第一辑 全12册）','牧羊少年奇幻之旅（精装）','小熊宝宝绘本（全15册）','家常菜精选1288例：现代人']
+                        data:['小熊和最好的爸爸','法布尔昆虫记（儿童彩图版）','月亮的味道','斯凯瑞金色童书・第一辑','小兔汤姆系列（第一辑）','信谊世界精选图画书・爷爷一定有办法','青蛙弗洛格的成长故事（第一辑 全12册）','牧羊少年奇幻之旅（精装）','小熊宝宝绘本','家常菜精选1288例：现代人'],
+                        selected:{
+                            '法布尔昆虫记（儿童彩图版）':false,
+                            '月亮的味道':false,
+                            '斯凯瑞金色童书・第一辑':false,
+                            '小兔汤姆系列（第一辑）':false,
+                            '信谊世界精选图画书・爷爷一定有办法':false,
+                            '青蛙弗洛格的成长故事（第一辑 全12册）':false,
+                            '牧羊少年奇幻之旅（精装）':false,
+                            '小熊宝宝绘本':false,
+                            '家常菜精选1288例：现代人':false,
+                        }
                     },
                     toolbox: {
                         show : false,
@@ -66,14 +77,14 @@
                     ],
                     series : [
                         {
-                            name:'小熊和最好的爸爸（全7册）',
+                            name:'小熊和最好的爸爸',
                             type:'line',
                             smooth:true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                            data:arr1[0]
+                            data:arr1[0],
                         },
                         {
-                            name:'法布尔昆虫记（全10册）（儿童彩图版）',
+                            name:'法布尔昆虫记（儿童彩图版）',
                             type:'line',
                             smooth:true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
@@ -87,14 +98,14 @@
                             data:arr1[2]
                         },
                         {
-                            name:'斯凯瑞金色童书・第一辑（全4册）',
+                            name:'斯凯瑞金色童书・第一辑',
                             type:'line',
                             smooth:true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
                             data:arr1[3]
                         },
                         {
-                            name:'小兔汤姆系列（第一辑）（全六册 ）',
+                            name:'小兔汤姆系列（第一辑）',
                             type:'line',
                             smooth:true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
@@ -122,7 +133,7 @@
                             data:arr1[7]
                         },
                         {
-                            name:'小熊宝宝绘本（全15册）',
+                            name:'小熊宝宝绘本',
                             type:'line',
                             smooth:true,
                             itemStyle: {normal: {areaStyle: {type: 'default'}}},
