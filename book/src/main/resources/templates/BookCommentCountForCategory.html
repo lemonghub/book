@@ -33,7 +33,6 @@
                 app.title = '';
 
                 option = {
-                    color: ['#3398DB'],
                     tooltip : {
                         trigger: 'axis',
                         axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -60,14 +59,20 @@
                             type : 'value'
                         }
                     ],
-                    series : [
-                        {
-                            name:'评论数',
-                            type:'bar',
-                            barWidth: '60%',
-                            data:commentCount
-                        }
-                    ]
+                    series: [{
+                        name:'评论数',
+                        type: 'bar',
+                        barWidth: '60%',
+                        data: commentCount,
+                        itemStyle: {
+                            normal:{
+                                color: function (params){
+                                    var colorList = ['#549bd3','#549bd3','#549bd3','#549bd3','#549bd3','#EA0000'];
+                                    return colorList[params.dataIndex];
+                                }
+                            },
+                        },
+                    }]
                 };
                 ;
                 if (option && typeof option === "object") {
