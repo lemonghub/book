@@ -25,7 +25,7 @@
   </resultMap>
 
   <select id="findTopTenBookName" resultType="String">
-    select book_name from tb_book_top group by book_name ORDER BY count(Book_name) DESC LIMIT 10;
+    select book_name from tb_book_top group by book_name ORDER BY count(Book_name) DESC,book_name DESC LIMIT 10;
   </select>
 
   <select id="findTopTenCount" resultType="String" parameterType="String">
