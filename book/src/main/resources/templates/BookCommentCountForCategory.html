@@ -140,10 +140,27 @@
         });
     }
 
+
+    function recommend(){
+        $.ajax({
+            type: 'post',
+            url: '/book/findTopThreeRecommend',
+            dataType: 'json',
+            success: function (data) {
+                for (var i = 0; i < 3; i++) {
+
+                    $("#inp1_" + i).text(data[i].categoryName);
+                    $("#inp2_" + i).text("预计销量：" + data[i].commentCount);
+                }
+
+            }
+        });
+    }
+
     $(document).ready(function () {
         sub_();
+        recommend();
     })
-
 
 </script>
 
@@ -213,8 +230,26 @@
 
 
             <div id="container" style="width: 1000px;height:450px; margin-left: 20px;"></div>
+            <br><br><br><br><br>
+            <h2 align="center">2019年推荐进购图书类别</h2>
+            <br><br>
+            <div class="col-md-12 column">
+                <div class="row clearfix">
+                    <div class="col-md-4 column item text-center">
+                        <h3 id="inp1_0"></h3><br/>
+                        <h3 id="inp2_0"></h3><br/>
 
-
+                    </div>
+                    <div class="col-md-4 column item text-center">
+                        <h3 id="inp1_1"></h3><br/>
+                        <h3 id="inp2_1"></h3><br/>
+                    </div>
+                    <div class="col-md-4 column item text-center">
+                        <h3 id="inp1_2"></h3><br/>
+                        <h3 id="inp2_2"></h3><br/>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </div>

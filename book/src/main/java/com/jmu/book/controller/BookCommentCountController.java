@@ -63,4 +63,10 @@ public class BookCommentCountController {
         List<BookCommentCount> list = bookCommentCountService.findTopThreeRecommend();
         return BookBigController.ListToJson(list);
     }
+
+    @RequestMapping("/findTopThreeRecommend_")
+    public String returnFindTop(){
+
+        return "findTopThreeRecommend";
+    }
 }
